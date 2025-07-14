@@ -10,7 +10,6 @@ const Footer: React.FC = () => {
             <span className="text-xl font-semibold text-gray-300">Streameefy</span>
         </div>
         <p>&copy; {new Date().getFullYear()} Streameefy IPTV. All Rights Reserved.</p>
-        <p className="text-xs mt-1">This is a demo application. No real services are provided.</p>
       </div>
     </footer>
   );

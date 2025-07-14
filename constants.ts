@@ -166,7 +166,7 @@ export const PLAYER_PLANS: PlayerPlan[] = [
     devices: ["Android TV", "Firestick"]
   },
   {
-    name: "GSE Smart IPTV",
+    name: "IBO Player",
     price: 9.99,
     description: "A versatile player that supports multiple playlist formats and devices.",
     devices: ["iOS", "Apple TV", "Android"]
