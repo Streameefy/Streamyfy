@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Streameefy IPTV</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      :root {
+        --neon-orange: #f97316; /* Tailwind orange-500 */
+        --dark-bg: #000000;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background-color: var(--dark-bg);
+        color: #f0f0f0;
+      }
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #111;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--neon-orange);
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #ea580c; /* Tailwind orange-600 */
+      }
+
+      /* Marquee Animation for Hero Carousel */
+      @keyframes scroll {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-50%);
+        }
+      }
+      .animate-scroll {
+        animation: scroll 40s linear infinite;
+      }
+      
+      /* Marquee Animation for OTT Logos */
+      @keyframes scroll-fast {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-50%);
+        }
+      }
+      .animate-scroll-fast {
+        animation: scroll-fast 25s linear infinite;
+      }
+
+      /* Marquee Animation for Header */
+      @keyframes scroll-header {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-50%);
+        }
+      }
+      .animate-scroll-header {
+        animation: scroll-header 40s linear infinite;
+      }
+
+      /* Modal Animation */
+      @keyframes fadeInScale {
+        from {
+          opacity: 0;
+          transform: scale(0.95);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+      .animate-fade-in-scale {
+        animation: fadeInScale 0.2s ease-out forwards;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.1.0/",
+    "react": "https://esm.sh/react@^19.1.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.1.0/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.9.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
