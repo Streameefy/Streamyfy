@@ -65,16 +65,16 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ onSuggestion }) => {
       </div>
       <div className="mt-4 flex flex-col sm:flex-row gap-2 relative">
         <div className="w-full relative">
-          <input
-            type="text"
-            value={prompt}
+        <input
+          type="text"
+          value={prompt}
             onChange={(e) => {
               setPrompt(e.target.value);
               setShowDropdown(true);
             }}
             placeholder="e.g., a funny space movie with robots or type a movie name"
-            disabled={isLoading}
-            className="flex-grow w-full bg-gray-700 border border-gray-600 rounded-md p-2.5 text-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition disabled:opacity-50"
+          disabled={isLoading}
+          className="flex-grow w-full bg-gray-700 border border-gray-600 rounded-md p-2.5 text-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition disabled:opacity-50"
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
                 setShowDropdown(false);

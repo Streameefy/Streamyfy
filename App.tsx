@@ -18,6 +18,17 @@ import WarrantyFAB from './components/WarrantyFAB';
 import PolicyModal from './components/PolicyModal';
 import { StagewiseToolbar } from '@stagewise/toolbar-react';
 import ReactPlugin from '@stagewise-plugins/react';
+import AdminAddMovie from './components/AdminAddMovie';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+// Helper to get admin movies from localStorage
+function getAdminMovies() {
+  try {
+    return JSON.parse(localStorage.getItem('adminMovies') || '[]');
+  } catch {
+    return [];
+  }
+}
 
 const App: React.FC = () => {
   const [filters, setFilters] = useState<Filters>({
@@ -32,8 +43,13 @@ const App: React.FC = () => {
   const [suggestedMovieTitle, setSuggestedMovieTitle] = useState<string | null>(null);
   const [isPolicyModalOpen, setIsPolicyModalOpen] = useState(false);
 
+  // Merge admin movies with default movies
+  const adminMovies = getAdminMovies();
+  const allMovies = [...adminMovies, ...MOVIES];
+
+  // Update filteredMovies to use allMovies instead of only MOVIES
   const filteredMovies = useMemo(() => {
-    return MOVIES.filter(movie => {
+    return allMovies.filter(movie => {
       const searchLower = filters.search.toLowerCase();
       return (
         (movie.title.toLowerCase().includes(searchLower) ||
@@ -44,7 +60,7 @@ const App: React.FC = () => {
         (movie.price <= filters.price)
       );
     });
-  }, [filters]);
+  }, [filters, allMovies]);
 
   const handleSuggestion = useCallback((title: string) => {
     setSuggestedMovieTitle(title);
@@ -56,11 +72,14 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <>
+    <Router>
       <StagewiseToolbar config={{ plugins: [ReactPlugin] }} />
+      <Routes>
+        <Route path="/" element={
+          <>
       <div className="bg-black text-gray-100 min-h-screen font-sans">
         <Header />
-        <HeroCarousel movies={MOVIES} />
+              <HeroCarousel movies={allMovies} />
         <main className="container mx-auto px-4 py-8">
           <section id="movies" className="relative flex flex-col lg:flex-row gap-8">
             {/* Sidebar Toggle Button for Mobile */}
@@ -117,6 +136,10 @@ const App: React.FC = () => {
         <PolicyModal isOpen={isPolicyModalOpen} onClose={() => setIsPolicyModalOpen(false)} />
       </div>
     </>
+        } />
+        <Route path="/admin" element={<AdminAddMovie />} />
+      </Routes>
+    </Router>
   );
 };
 

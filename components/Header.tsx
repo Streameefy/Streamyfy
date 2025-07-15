@@ -20,7 +20,7 @@ const Header: React.FC = () => {
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center py-4">
           <a href="#" className="flex items-center space-x-2 text-2xl font-bold">
-            <FilmIcon className="text-orange-500 h-8 w-8" />
+            <img src="/logo.svg" alt="Logo" className="h-10 w-10" />
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-orange-500">
               Streameefy
             </span>

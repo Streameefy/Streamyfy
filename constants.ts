@@ -7,6 +7,16 @@ export const SERVERS: string[] = ["Alpha-S1", "Bravo-S2", "Charlie-S3", "Delta-S
 
 export const MOVIES: Movie[] = [
   {
+    id: 0,
+    title: "Peddi (First Look)",
+    posterUrl: "https://www.filmibeat.com/img/2024/07/ramcharan-tejas-peddi-1719919642.jpg", // direct image from the provided link
+    genre: Genre.Drama,
+    languages: ["Telugu"],
+    server: "Alpha-S1",
+    price: 0,
+    priceType: 'monthly',
+  },
+  {
     id: 1,
     title: "Inception",
     posterUrl: "https://picsum.photos/seed/inception/400/600",
