@@ -16,6 +16,8 @@ import AIAssistant from './components/AIAssistant';
 import { MenuIcon } from './components/icons';
 import WarrantyFAB from './components/WarrantyFAB';
 import PolicyModal from './components/PolicyModal';
+import { StagewiseToolbar } from '@stagewise/toolbar-react';
+import ReactPlugin from '@stagewise-plugins/react';
 
 const App: React.FC = () => {
   const [filters, setFilters] = useState<Filters>({
@@ -54,64 +56,67 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="bg-black text-gray-100 min-h-screen font-sans">
-      <Header />
-      <HeroCarousel movies={MOVIES} />
-      <main className="container mx-auto px-4 py-8">
-        <section id="movies" className="relative flex flex-col lg:flex-row gap-8">
-          {/* Sidebar Toggle Button for Mobile */}
-          <div className="lg:hidden flex justify-end mb-4">
-            <button
-              onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="p-2 rounded-md bg-gray-900 hover:bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-orange-500"
+    <>
+      <StagewiseToolbar config={{ plugins: [ReactPlugin] }} />
+      <div className="bg-black text-gray-100 min-h-screen font-sans">
+        <Header />
+        <HeroCarousel movies={MOVIES} />
+        <main className="container mx-auto px-4 py-8">
+          <section id="movies" className="relative flex flex-col lg:flex-row gap-8">
+            {/* Sidebar Toggle Button for Mobile */}
+            <div className="lg:hidden flex justify-end mb-4">
+              <button
+                onClick={() => setSidebarOpen(!sidebarOpen)}
+                className="p-2 rounded-md bg-gray-900 hover:bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-orange-500"
+              >
+                <MenuIcon />
+                <span className="ml-2">Filters</span>
+              </button>
+            </div>
+
+            {/* Sidebar Backdrop */}
+            {sidebarOpen && (
+              <div 
+                className="fixed inset-0 bg-black/60 z-30 lg:hidden"
+                onClick={() => setSidebarOpen(false)}
+              ></div>
+            )}
+
+            {/* Sidebar */}
+            <aside
+              className={`fixed lg:relative top-0 left-0 h-full lg:h-auto z-40 lg:z-auto w-4/5 sm:w-64 lg:w-1/4 bg-black/95 backdrop-blur-sm lg:bg-transparent lg:backdrop-blur-none transition-transform transform ${
+                sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+              } lg:translate-x-0 lg:block`}
             >
-              <MenuIcon />
-              <span className="ml-2">Filters</span>
-            </button>
-          </div>
+               <FilterSidebar
+                filters={filters}
+                setFilters={setFilters}
+                genres={GENRES}
+                languages={LANGUAGES}
+                servers={SERVERS}
+                onClose={() => setSidebarOpen(false)}
+              />
+            </aside>
 
-          {/* Sidebar Backdrop */}
-          {sidebarOpen && (
-            <div 
-              className="fixed inset-0 bg-black/60 z-30 lg:hidden"
-              onClick={() => setSidebarOpen(false)}
-            ></div>
-          )}
+            {/* Main Content */}
+            <div className="w-full lg:w-3/4">
+               <AIAssistant onSuggestion={handleSuggestion} />
+               <MovieGrid movies={filteredMovies} suggestedMovieTitle={suggestedMovieTitle} />
+            </div>
+          </section>
 
-          {/* Sidebar */}
-          <aside
-            className={`fixed lg:relative top-0 left-0 h-full lg:h-auto z-40 lg:z-auto w-4/5 sm:w-64 lg:w-1/4 bg-black/95 backdrop-blur-sm lg:bg-transparent lg:backdrop-blur-none transition-transform transform ${
-              sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-            } lg:translate-x-0 lg:block`}
-          >
-             <FilterSidebar
-              filters={filters}
-              setFilters={setFilters}
-              genres={GENRES}
-              languages={LANGUAGES}
-              servers={SERVERS}
-              onClose={() => setSidebarOpen(false)}
-            />
-          </aside>
-
-          {/* Main Content */}
-          <div className="w-full lg:w-3/4">
-             <AIAssistant onSuggestion={handleSuggestion} />
-             <MovieGrid movies={filteredMovies} suggestedMovieTitle={suggestedMovieTitle} />
-          </div>
-        </section>
-
-        <ChannelLineup channels={CHANNELS} ottPlatforms={OTT_PLATFORMS} />
-        <HowItWorks />
-        <IptvPricing plans={IPTV_PLANS} />
-        <PlayerPricing players={PLAYER_PLANS} />
-        <Testimonials />
-        <ContactForm />
-      </main>
-      <Footer />
-      <WarrantyFAB onOpen={() => setIsPolicyModalOpen(true)} />
-      <PolicyModal isOpen={isPolicyModalOpen} onClose={() => setIsPolicyModalOpen(false)} />
-    </div>
+          <ChannelLineup channels={CHANNELS} ottPlatforms={OTT_PLATFORMS} />
+          <HowItWorks />
+          <IptvPricing plans={IPTV_PLANS} />
+          <PlayerPricing players={PLAYER_PLANS} />
+          <Testimonials />
+          <ContactForm />
+        </main>
+        <Footer />
+        <WarrantyFAB onOpen={() => setIsPolicyModalOpen(true)} />
+        <PolicyModal isOpen={isPolicyModalOpen} onClose={() => setIsPolicyModalOpen(false)} />
+      </div>
+    </>
   );
 };
 
